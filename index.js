@@ -41,7 +41,10 @@ module.exports = function (source) {
     if (!filename.match(/\*/)) return match;
 
     if (alias) {
-      Object.entries(alias).some(([alias, repl]) => {
+      Object.entries(alias).some((args) => {
+        var alias = args.alias;
+        var repl = args.repl;
+
         if (filename.startsWith(alias)) {
           filename = filename.replace(alias, repl);
           return true;
