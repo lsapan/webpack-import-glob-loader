@@ -29,10 +29,8 @@ module.exports = function (source) {
   var importFiles = /import +([\'\"])(.*?)\1/gm;
   var importSass = /@import +([\'\"])(.*?)\1/gm;
   var resourceDir = path.dirname(this.resourcePath);
-
   var nodeModulesPath = walkUpToFindNodeModulesPath(resourceDir);
-
-  var alias = loaderUtils.getOptions(this).alias;
+  var loaderOptions = loaderUtils.getOptions(this);
 
   function replacer(match, fromStatement, obj, quote, filename) {
     var modules = [];
@@ -40,8 +38,8 @@ module.exports = function (source) {
 
     if (!filename.match(/\*/)) return match;
 
-    if (alias) {
-      Object.entries(alias).some((args) => {
+    if (loaderOptions && loaderOptions.alias) {
+      Object.entries(loaderOptions.alias).some((args) => {
         var alias = args.alias;
         var repl = args.repl;
 
