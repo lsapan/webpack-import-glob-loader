@@ -30,7 +30,7 @@ module.exports = function (source) {
   var importSass = /@import +([\'\"])(.*?)\1/gm;
   var resourceDir = path.dirname(this.resourcePath);
   var nodeModulesPath = walkUpToFindNodeModulesPath(resourceDir);
-  var loaderOptions = loaderUtils.getOptions(this);
+  var loaderOptions = Object.assign({}, loaderUtils.getOptions(this));
 
   function replacer(match, fromStatement, obj, quote, filename) {
     var modules = [];
@@ -38,7 +38,7 @@ module.exports = function (source) {
 
     if (!filename.match(/\*/)) return match;
 
-    if (loaderOptions && loaderOptions.alias) {
+    if (loaderOptions.alias) {
       Object.entries(loaderOptions.alias).some((args) => {
         var alias = args.alias;
         var repl = args.repl;
