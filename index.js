@@ -88,7 +88,11 @@ module.exports = function (source) {
       .join("; ");
 
     if (result && withModules) {
-      result += "; var " + obj + " = [" + modules.join(", ") + "]";
+      result += "; var " + obj + " = {"
+      modules.forEach((moduleName) => {
+          result += '"' + moduleName + '": ' + moduleName + ','
+      })
+      result += "}"
     }
 
     if (!result) {
