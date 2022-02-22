@@ -75,7 +75,7 @@ module.exports = function (source) {
         if (match.match(importSass)) {
           return "@import " + fileName;
         } else if (match.match(importModules)) {
-          var moduleName = obj + index;
+          var moduleName = path.basename(file).split('.').slice(0, -1).join('.');
           modules.push(moduleName);
           withModules = true;
           return "import * as " + moduleName + " from " + fileName;
